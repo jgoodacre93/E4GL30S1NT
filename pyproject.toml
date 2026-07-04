@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "eagleosint"
-version = "2.0.0"
+version = "2.1.0"
 description = "Simple Information Gathering Toolkit"
 readme = "README.md"
 license = { text = "GPL-3.0" }

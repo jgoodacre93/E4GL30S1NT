@@ -22,6 +22,7 @@ from eagleosint.providers.phoneinfo import phoneinfo
 from eagleosint.providers.tempmail import temp_mail_gen
 from eagleosint.providers.userrecon import userrecon
 from eagleosint.providers.metadata import metadata_extract
+from eagleosint.providers.breach import breach_check
 
 
 def menu():
@@ -522,6 +523,27 @@ def cmd_metadata(output: str | None, output_file: str | None, save_to: str | Non
         from eagleosint.storage import save_result
         save_result(save_to, result)
         print(f"{BLUE}>{WHITE} result saved to investigation {save_to}")
+
+@main.command("breach")
+@click.option("--output", "-o", type=click.Choice(["json", "csv"]), default=None,
+              help="Emit structured output.")
+@click.option("--output-file", "-f", "output_file", type=click.Path(), default=None,
+              help="Write output to this file path.")
+@click.option("--save-to", "save_to", default=None,
+              help="Save results to this investigation ID.")
+@click.option("--show-pii", is_flag=True, default=False,
+              help="Show unmasked PII in output.")
+def cmd_breach(output: str | None, output_file: str | None, save_to: str | None, show_pii: bool) -> None:
+    """Check if an email or phone has been exposed in data breaches."""
+    print(LOGO)
+    results = breach_check()
+    if output and results:
+        _write_output(results, output, output_file, show_pii=show_pii)
+    if save_to and results:
+        from eagleosint.storage import save_result
+        for r in results:
+            save_result(save_to, r)
+        print(f"{BLUE}>{WHITE} {len(results)} results saved to investigation {save_to}")
 
 @main.command("tempmail")
 def cmd_tempmail() -> None:

@@ -48,6 +48,10 @@ class Settings(BaseModel):
 
     pingutil_api_key: SecretStr | None = None
     veriphone_api_key: SecretStr | None = None
+    hibp_api_key: SecretStr | None = None
+    dehashed_api_key: SecretStr | None = None
+    dehashed_email: SecretStr | None = None
+    leakcheck_api_key: SecretStr | None = None
 
     def get_key(self, name: str) -> str | None:
         """Return a secret value by its dash-separated key name."""
@@ -104,6 +108,10 @@ def _load_settings() -> Settings:
     _env_map = {
         "pingutil-api-key": "E4GL30S1NT_PINGUTIL_KEY",
         "veriphone-api-key": "E4GL30S1NT_VERIPHONE_KEY",
+        "hibp-api-key": "E4GL30S1NT_HIBP_KEY",
+        "dehashed-api-key": "E4GL30S1NT_DEHASHED_KEY",
+        "dehashed-email": "E4GL30S1NT_DEHASHED_EMAIL",
+        "leakcheck-api-key": "E4GL30S1NT_LEAKCHECK_KEY",
     }
     for key_name, env_var in _env_map.items():
         val = os.getenv(env_var)
@@ -113,6 +121,10 @@ def _load_settings() -> Settings:
     return Settings(
         pingutil_api_key=_to_secret(data.get("pingutil-api-key")),
         veriphone_api_key=_to_secret(data.get("veriphone-api-key")),
+        hibp_api_key=_to_secret(data.get("hibp-api-key")),
+        dehashed_api_key=_to_secret(data.get("dehashed-api-key")),
+        dehashed_email=_to_secret(data.get("dehashed-email")),
+        leakcheck_api_key=_to_secret(data.get("leakcheck-api-key")),
     )
 
 settings = _load_settings()

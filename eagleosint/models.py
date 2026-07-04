@@ -167,3 +167,15 @@ class Investigation(BaseModel):
 
     def by_source(self, source: str) -> list[ProviderResult]:
         return [r for r in self.results if r.source == source]
+
+
+class BreachResult(ProviderResult):
+    """A single breach record for an email, phone, or username."""
+    source: str = "breach"
+    breach_name: str
+    breach_date: str | None = None
+    exposed_data: list[str] = Field(default_factory=list)
+    domain: str | None = None
+    description: str | None = None
+    is_verified: bool = True
+    is_sensitive: bool = False
