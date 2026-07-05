@@ -49,6 +49,7 @@ def menu():
         {WHITE}{BLUE}  14{WHITE} Github Lookup {DARK_GRAY} Dump GitHub information
         {WHITE}{BLUE}  15{WHITE} TempMail {DARK_GRAY}      Generate Temp Mail and Mail Box
         {WHITE}{BLUE}  16{WHITE} Metadata  {DARK_GRAY}      Extract metadata from files
+        {WHITE}{BLUE}  17{WHITE} Breach     {DARK_GRAY}      Check email/phone in data breaches
         {WHITE}{BLUE}  00{WHITE} Exit          {DARK_GRAY} bye bye ):
         """
     )
@@ -99,6 +100,8 @@ def mainmenu():
                     temp_mail_gen()
                 elif cmd in ("16"):
                     metadata_extract()
+                elif cmd in ("17"):
+                    breach_check()
             else:
                 continue
         except KeyboardInterrupt:
